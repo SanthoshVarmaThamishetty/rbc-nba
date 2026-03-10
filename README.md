@@ -1,17 +1,6 @@
 # RBC Next Best Action Intelligence Engine
 
-A full-stack demo app mirroring what RBC's real NBA team builds — powered by Groq LLaMA-3 70B.
-
----
-
-## ⚡ Setup in 3 Steps
-
-### Step 1 — Add your Groq API Key
-Open `backend/server.js` and replace line 7:
-```
-const GROQ_API_KEY = "YOUR_GROQ_API_KEY_HERE";
-```
-Get a free key at: https://console.groq.com
+A full-stack demo app mirroring what RBC's real NBA team build.
 
 ---
 
