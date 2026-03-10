@@ -1,6 +1,16 @@
 import React, { useState, useEffect, useRef } from 'react';
 import RBCShield from './RBCShield';
 
+function useMobile() {
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+  useEffect(() => {
+    const handler = () => setIsMobile(window.innerWidth < 768);
+    window.addEventListener('resize', handler);
+    return () => window.removeEventListener('resize', handler);
+  }, []);
+  return isMobile;
+}
+
 // ─────────────────────────────────────────────────────────────────────────────
 // SHARED ATOMS
 // ─────────────────────────────────────────────────────────────────────────────
@@ -396,6 +406,7 @@ export function DashboardPage({ onNext, onBack, onHome }) {
 // PAGE 4 - AGENTIC AI TERMINAL  (purple theme)
 // ─────────────────────────────────────────────────────────────────────────────
 export function AgentPage({ onBack, onLaunch, onHome }) {
+  const isMobile = useMobile();
   const [msgs,   setMsgs]   = useState([]);
   const [running,setRunning]= useState(false);
   const [done,   setDone]   = useState(false);
@@ -521,14 +532,16 @@ export function AgentPage({ onBack, onLaunch, onHome }) {
           <p style={{fontSize:12,color:'rgba(232,234,240,.35)'}}>LLM orchestration · SQL tool · Spark features · Vector DB · ML scoring · Experiment engine - all in one agent</p>
         </div>
 
-        <div style={{display:'grid',gridTemplateColumns:'260px 1fr',gap:24}}>
+        <div style={{display:'grid',gridTemplateColumns: isMobile ? '1fr' : '260px 1fr',gap: isMobile ? 16 : 24}}>
 
           {/* ── Robot panel ── */}
-          <div style={{display:'flex',flexDirection:'column',gap:14}}>
-            <div style={{background:'rgba(7,18,33,.92)',border:`1px solid ${moodColor[mood]}2a`,borderRadius:20,padding:'26px 18px',textAlign:'center',transition:'border-color .5s',animation:'vLeft .7s cubic-bezier(.22,1,.36,1) .2s both'}}>
+          <div style={{display:'flex',flexDirection: isMobile ? 'row' : 'column',gap:14}}>
+            <div style={{background:'rgba(7,18,33,.92)',border:`1px solid ${moodColor[mood]}2a`,borderRadius:20,padding: isMobile ? '16px 12px' : '26px 18px',textAlign:'center',transition:'border-color .5s',animation:'vLeft .7s cubic-bezier(.22,1,.36,1) .2s both', flex: isMobile ? '0 0 auto' : undefined}}>
               <div style={{position:'relative',display:'inline-block',marginBottom:10}}>
                 <div style={{position:'absolute',inset:-20,borderRadius:'50%',background:`radial-gradient(circle,${moodColor[mood]}1a,transparent)`,animation:'pulse 2s ease-in-out infinite'}}/>
-                <Robot/>
+                <div style={{transform: isMobile ? 'scale(0.65)' : 'scale(1)', transformOrigin:'top center', display:'block', height: isMobile ? 124 : 'auto'}}>
+                  <Robot/>
+                </div>
               </div>
               <div style={{fontFamily:"'Syne',sans-serif",fontWeight:700,fontSize:13,color:moodColor[mood],marginBottom:3,transition:'color .5s'}}>ATOM Agent</div>
               <div style={{fontSize:10,color:'rgba(232,234,240,.3)',letterSpacing:'.08em',textTransform:'uppercase',marginBottom:12}}>
@@ -576,7 +589,7 @@ export function AgentPage({ onBack, onLaunch, onHome }) {
             </div>
 
             {/* output */}
-            <div ref={scrollRef} style={{flex:1,padding:'18px 18px',overflowY:'auto',minHeight:380,maxHeight:440,fontFamily:"'DM Mono',monospace",fontSize:12,lineHeight:1.75}}>
+            <div ref={scrollRef} style={{flex:1,padding: isMobile ? '12px 12px' : '18px 18px',overflowY:'auto',minHeight: isMobile ? 260 : 380,maxHeight: isMobile ? 320 : 440,fontFamily:"'DM Mono',monospace",fontSize: isMobile ? 11 : 12,lineHeight:1.75}}>
               {msgs.length===0&&(
                 <div style={{color:'rgba(232,234,240,.22)'}}>
                   <span>$ atom-agent --mode nba --customer 82291 --verbose</span>
@@ -605,7 +618,7 @@ export function AgentPage({ onBack, onLaunch, onHome }) {
         </div>
 
         {/* Capabilities row */}
-        <div style={{display:'grid',gridTemplateColumns:'repeat(4,1fr)',gap:14,marginTop:22}}>
+        <div style={{display:'grid',gridTemplateColumns: isMobile ? 'repeat(2,1fr)' : 'repeat(4,1fr)',gap: isMobile ? 10 : 14,marginTop:22}}>
           {[
             {icon:'🧠',label:'LLM Orchestration',  desc:'sub-second reasoning via multi-tool agent loop',      color:'#a78bfa'},
             {icon:'🗄️',label:'SQL + NoSQL + VectorDB',desc:'PostgreSQL, DynamoDB, MongoDB, FAISS - right store for each job',        color:'#38bdf8'},
