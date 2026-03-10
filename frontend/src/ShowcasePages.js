@@ -137,7 +137,7 @@ export function PipelinePage({ onNext, onBack, onHome }) {
       ))}
 
       <div style={{position:'relative',zIndex:2,maxWidth:1140,margin:'0 auto',padding: isMobile ? '24px 16px' : '38px 28px'}}>
-        <NavBar accent='#38bdf8' label='Skill Showcase 01 - Big Data + MLOps ' onBack={onBack} onNext={onNext} onHome={onHome}/>
+        <NavBar accent='#38bdf8' label='Big Data + MLOps' onBack={onBack} onNext={onNext} onHome={onHome}/>
 
         <div style={{animation:'vUp .8s cubic-bezier(.22,1,.36,1) .1s both'}}>
           <h1 style={{fontFamily:"'Syne',sans-serif",fontWeight:800,fontSize:'clamp(30px,4.5vw,54px)',lineHeight:1.08,marginBottom:10,background:'linear-gradient(130deg,#fff 0%,#38bdf8 45%,#005DAA 100%)',WebkitBackgroundClip:'text',WebkitTextFillColor:'transparent',backgroundClip:'text'}}>ML Pipeline<br/>Architecture</h1>
@@ -307,7 +307,7 @@ export function DashboardPage({ onNext, onBack, onHome }) {
       <div style={{position:'fixed',inset:0,zIndex:0,opacity:.03,backgroundImage:'linear-gradient(rgba(52,211,153,.5) 1px,transparent 1px),linear-gradient(90deg,rgba(52,211,153,.5) 1px,transparent 1px)',backgroundSize:'42px 42px'}}/>
 
       <div style={{position:'relative',zIndex:2,maxWidth:1200,margin:'0 auto',padding: isMobile ? '24px 16px' : '38px 28px'}}>
-        <NavBar accent='#34d399' label='Skill Showcase 02 - Real-time Systems + Observability' onBack={onBack} onNext={onNext} onHome={onHome}/>
+        <NavBar accent='#34d399' label='Real-time Systems + Observability' onBack={onBack} onNext={onNext} onHome={onHome}/>
 
         <div style={{animation:'vUp .7s cubic-bezier(.22,1,.36,1) .1s both',marginBottom:36}}>
           <h1 style={{fontFamily:"'Syne',sans-serif",fontWeight:800,fontSize:'clamp(28px,4vw,50px)',lineHeight:1.08,background:'linear-gradient(130deg,#fff 0%,#34d399 100%)',WebkitBackgroundClip:'text',WebkitTextFillColor:'transparent',backgroundClip:'text',marginBottom:8}}>Live NBA<br/>Monitoring Dashboard</h1>
@@ -431,7 +431,7 @@ export function AgentPage({ onBack, onLaunch, onHome }) {
     {d:8000, type:'out',   text:'↳ RBC Avion Visa Infinite  → 0.91 ★\n  RRSP Contribution         → 0.74\n  RBC InvestEase            → 0.69\n  RBC FHSA                  → 0.52'},
     {d:9000, type:'sys',   text:'[Tool: experiment_engine] Checking active A/B tests for this segment…'},
     {d:9800, type:'out',   text:'↳ Assigned: Campaign "Avion Spring 2025" Variant B\n  Channel: personalised push + email at 09:00 local'},
-    {d:10800,type:'agent', text:'━━ ATOM REASONING COMPLETE ━━\n\nRecommended Action:  RBC Avion Visa Infinite\nChannel:             Push notification + Email\nUrgency:             HIGH  (active travel signals)\nConfidence:          91 %\nExperiment:          Variant B - "Avion Spring 2025"\n\nFiring recommendation to campaign orchestration engine…'},
+    {d:10800,type:'agent', text:'-- ATOM REASONING COMPLETE --\n\nRecommended Action:  RBC Avion Visa Infinite\nChannel:             Push notification + Email\nUrgency:             HIGH  (active travel signals)\nConfidence:          91 %\nExperiment:          Variant B - "Avion Spring 2025"\n\nFiring recommendation to campaign orchestration engine...'},
     {d:12000,type:'sys',   text:'[Airflow DAG] nba_campaign_trigger - task queued ✓  Done.'},
   ];
 
@@ -527,7 +527,7 @@ export function AgentPage({ onBack, onLaunch, onHome }) {
       <div style={{position:'fixed',inset:0,zIndex:0,animation:'hexFade 5s ease-in-out infinite',backgroundImage:`url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='44' height='76'%3E%3Cpath d='M22 54L4 44V24L22 14l18 10v20z' fill='none' stroke='%23a78bfa' stroke-width='1'/%3E%3C/svg%3E")`,backgroundSize:'44px 76px'}}/>
 
       <div style={{position:'relative',zIndex:2,maxWidth:1200,margin:'0 auto',padding:'38px 28px'}}>
-        <NavBar accent='#a78bfa' label='Skill Showcase 03 - Agentic AI + LLMs ' onBack={onBack}
+        <NavBar accent='#a78bfa' label='Agentic AI + LLMs' onBack={onBack}
           onNext={onLaunch} nextLabel='Launch NBA Engine' onHome={onHome}/>
 
         <div style={{animation:'vUp .7s cubic-bezier(.22,1,.36,1) .1s both',marginBottom:36}}>
