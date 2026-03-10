@@ -1,4 +1,14 @@
 import React, { useState, useEffect, useRef } from 'react';
+
+function useMobile() {
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+  useEffect(() => {
+    const handler = () => setIsMobile(window.innerWidth < 768);
+    window.addEventListener('resize', handler);
+    return () => window.removeEventListener('resize', handler);
+  }, []);
+  return isMobile;
+}
 import { PipelinePage, DashboardPage, AgentPage } from './ShowcasePages';
 import RBCShield from './RBCShield';
 
@@ -129,6 +139,7 @@ function Robot({ isDragging, dragProgress }) {
 
 // ── LANDING PAGE ──────────────────────────────────────────────────────────────
 function LandingPage({ onEnter }) {
+  const isMobile = useMobile();
   const [visible, setVisible] = useState(false);
   const [dragStart, setDragStart] = useState(null);
   const [dragX, setDragX] = useState(0);
@@ -197,7 +208,7 @@ function LandingPage({ onEnter }) {
       {/* Scan line */}
       <div style={{ position:'fixed', left:0, right:0, height:2, background:'linear-gradient(90deg, transparent, rgba(0,93,170,0.4), rgba(255,210,0,0.2), transparent)', zIndex:1, animation:'scanLine 8s linear infinite', pointerEvents:'none' }}/>
 
-      <div style={{ position:'relative', zIndex:2, maxWidth:1100, margin:'0 auto', padding:'0 28px' }}>
+      <div style={{ position:'relative', zIndex:2, maxWidth:1100, margin:'0 auto', padding: isMobile ? '0 16px' : '0 28px' }}>
 
         {/* ── TOP NAV ── */}
         <nav style={{ display:'flex', alignItems:'center', justifyContent:'space-between', padding:'24px 0 0',
@@ -217,7 +228,7 @@ function LandingPage({ onEnter }) {
         </nav>
 
         {/* ── HERO ── */}
-        <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:40, alignItems:'center', minHeight:'calc(100vh - 100px)', padding:'40px 0' }}>
+        <div style={{ display:'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: isMobile ? 24 : 40, alignItems:'center', minHeight:'calc(100vh - 100px)', padding: isMobile ? '24px 0' : '40px 0' }}>
 
           {/* Left - text */}
           <div>
@@ -266,7 +277,7 @@ function LandingPage({ onEnter }) {
             </div>
 
             {/* Stats row */}
-            <div style={{ opacity: visible ? 1 : 0, transition:'all 0.8s ease 0.8s', display:'grid', gridTemplateColumns:'repeat(3,1fr)', gap:12 }}>
+            <div style={{ opacity: visible ? 1 : 0, transition:'all 0.8s ease 0.8s', display:'grid', gridTemplateColumns:'repeat(3,1fr)', gap: isMobile ? 8 : 12 }}>
               {[
                 { v:'17M+', l:'RBC Clients' },
                 { v:'1.1B+', l:'NOMI Insights' },
@@ -304,7 +315,7 @@ function LandingPage({ onEnter }) {
             opacity: visible ? 1 : 0, transform: visible ? 'translateY(0)' : 'translateY(30px)', transition:'all 0.9s ease 0.4s' }}>
 
             {/* Drag track */}
-            <div style={{ position:'relative', width:'100%', maxWidth:360, marginBottom:32 }}>
+            <div style={{ position:'relative', width:'100%', maxWidth: isMobile ? '100%' : 360, marginBottom: isMobile ? 16 : 32 }}>
 
               {/* Track background */}
               <div style={{ position:'relative', height:90, borderRadius:45,
@@ -343,7 +354,7 @@ function LandingPage({ onEnter }) {
                   <div style={{ position:'absolute', left:96, right:50, display:'flex', alignItems:'center', gap:6,
                     fontSize:13, color:'rgba(232,234,240,0.4)', pointerEvents:'none' }}>
                     <span style={{ animation:'swipeHint 1.5s ease-in-out infinite' }}>→</span>
-                    <span>Swipe to launch</span>
+                    <span>{isMobile ? 'Swipe right to launch' : 'Swipe to launch'}</span>
                   </div>
                 )}
                 {dragProgress >= 0.1 && dragProgress < 1 && (
@@ -362,9 +373,19 @@ function LandingPage({ onEnter }) {
             </div>
 
             {/* Big robot */}
-            <div style={{ transform:`translateX(${dragProgress * 30}px)`, transition: isDragging ? 'none' : 'transform 0.4s ease' }}>
+            <div style={{ transform:`translateX(${dragProgress * 30}px)`, transition: isDragging ? 'none' : 'transform 0.4s ease', transform: isMobile ? `translateX(${dragProgress * 30}px) scale(0.75)` : `translateX(${dragProgress * 30}px)` }}>
               <Robot isDragging={isDragging} dragProgress={dragProgress}/>
             </div>
+
+            {/* Mobile tap-to-launch button */}
+            {isMobile && (
+              <button onClick={onEnter} style={{ marginTop:8, padding:'14px 40px', borderRadius:12, border:'none', cursor:'pointer',
+                fontFamily:'Syne, sans-serif', fontWeight:700, fontSize:15, letterSpacing:'0.07em',
+                background:'linear-gradient(135deg, #FFD200, #e6a800)', color:'#03080f',
+                boxShadow:'0 4px 24px rgba(255,210,0,0.3)' }}>
+                Launch Engine 🚀
+              </button>
+            )}
 
           </div>
         </div>
@@ -376,6 +397,7 @@ function LandingPage({ onEnter }) {
 
 // ── ENGINE PAGE ───────────────────────────────────────────────────────────────
 function EnginePage({ onBack, onHome }) {
+  const isMobile = useMobile();
   const [form, setForm] = useState({
     age: 32, income: '$40,000 - $80,000', products: ['Chequing'],
     lifeEvent: 'None', behaviour: 'Regular spender', activity: '',
@@ -446,15 +468,15 @@ function EnginePage({ onBack, onHome }) {
         backgroundImage:'linear-gradient(rgba(0,93,170,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(0,93,170,0.5) 1px, transparent 1px)',
         backgroundSize:'60px 60px' }}/>
 
-      <div style={{ position:'relative', zIndex:1, maxWidth:1040, margin:'0 auto', padding:'0 24px 80px' }}>
+      <div style={{ position:'relative', zIndex:1, maxWidth:1040, margin:'0 auto', padding: isMobile ? '0 16px 60px' : '0 24px 80px' }}>
 
         {/* Header */}
         <header style={{ padding:'24px 0 18px', display:'flex', alignItems:'center', justifyContent:'space-between', borderBottom:'1px solid rgba(0,93,170,0.15)', marginBottom:36, animation:'fadeUp 0.6s ease both' }}>
           <button onClick={onHome} style={{ display:'flex', alignItems:'center', gap:12, background:'none', border:'none', cursor:'pointer', padding:0, textAlign:'left' }}>
             <RBCShield size={38}/>
             <div>
-              <div style={{ fontFamily:'Syne, sans-serif', fontWeight:700, fontSize:14, color:'var(--text)' }}>Next Best Action Engine</div>
-              <div style={{ fontSize:10, color:'rgba(232,234,240,0.35)', letterSpacing:'0.1em', textTransform:'uppercase', marginTop:1 }}>Data Innovation - Personal Banking</div>
+              <div style={{ fontFamily:'Syne, sans-serif', fontWeight:700, fontSize: isMobile ? 12 : 14, color:'var(--text)' }}>Next Best Action Engine</div>
+              {!isMobile && <div style={{ fontSize:10, color:'rgba(232,234,240,0.35)', letterSpacing:'0.1em', textTransform:'uppercase', marginTop:1 }}>Data Innovation - Personal Banking</div>}
             </div>
           </button>
           <div style={{ display:'flex', gap:12, alignItems:'center' }}>
@@ -471,7 +493,7 @@ function EnginePage({ onBack, onHome }) {
             {error && <div style={{ background:'rgba(248,113,113,0.08)', border:'1px solid rgba(248,113,113,0.2)', borderRadius:12, padding:'12px 16px', marginBottom:20, fontSize:13, color:'#f87171' }}>{error}</div>}
             <Card>
               <SLabel>Customer Profile Input</SLabel>
-              <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:20 }}>
+              <div style={{ display:'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap:20 }}>
                 <div>
                   <FLabel>Customer Age</FLabel>
                   <div style={{ display:'flex', alignItems:'center', gap:14 }}>
@@ -622,7 +644,7 @@ function EnginePage({ onBack, onHome }) {
               </div>
 
               {/* Bottom row — Next Action + Cross-Sell */}
-              <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:14, marginBottom:14 }}>
+              <div style={{ display:'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap:14, marginBottom:14 }}>
                 <div style={{ background:'rgba(0,60,140,0.18)', border:'1px solid rgba(96,165,250,0.3)', borderRadius:14, padding:'18px 16px' }}>
                   <div style={{ display:'flex', alignItems:'center', gap:6, marginBottom:10 }}>
                     <span style={{ fontSize:14 }}>📋</span>
