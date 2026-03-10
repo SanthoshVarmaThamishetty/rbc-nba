@@ -61,15 +61,16 @@ function ScanBeam({ color='rgba(0,93,170,0.3)' }) {
 }
 
 function NavBar({ accent, label, onBack, onNext, nextLabel='Next', onHome }) {
+  const isMobile = useMobile();
   return (
-    <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:44,animation:'vUp .7s cubic-bezier(.22,1,.36,1) both'}}>
+    <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom: isMobile ? 24 : 44,animation:'vUp .7s cubic-bezier(.22,1,.36,1) both'}}>
       <button onClick={onHome} style={{display:'flex',alignItems:'center',gap:10,background:'none',border:'none',cursor:'pointer',padding:0,textAlign:'left'}}>
-        <RBCShield size={36}/>
-        <div style={{fontSize:10,letterSpacing:'.2em',textTransform:'uppercase',color:accent,fontFamily:"'DM Sans',sans-serif"}}>{label}</div>
+        <RBCShield size={isMobile ? 28 : 36}/>
+        {!isMobile && <div style={{fontSize:10,letterSpacing:'.2em',textTransform:'uppercase',color:accent,fontFamily:"'DM Sans',sans-serif"}}>{label}</div>}
       </button>
-      <div style={{display:'flex',gap:10}}>
-        <button onClick={onBack} style={{padding:'8px 18px',borderRadius:8,border:'1px solid rgba(255,255,255,0.09)',background:'transparent',color:'rgba(232,234,240,.4)',cursor:'pointer',fontSize:12,fontFamily:"'DM Sans',sans-serif",transition:'all .2s'}}>← Back</button>
-        {onNext && <button onClick={onNext} style={{padding:'8px 20px',borderRadius:8,border:`1px solid ${accent}55`,background:`${accent}15`,color:accent,cursor:'pointer',fontSize:12,fontFamily:"'DM Sans',sans-serif",transition:'all .2s'}}>{nextLabel} →</button>}
+      <div style={{display:'flex',gap: isMobile ? 6 : 10}}>
+        <button onClick={onBack} style={{padding: isMobile ? '7px 12px' : '8px 18px',borderRadius:8,border:'1px solid rgba(255,255,255,0.09)',background:'transparent',color:'rgba(232,234,240,.4)',cursor:'pointer',fontSize: isMobile ? 11 : 12,fontFamily:"'DM Sans',sans-serif",transition:'all .2s'}}>← Back</button>
+        {onNext && <button onClick={onNext} style={{padding: isMobile ? '7px 12px' : '8px 20px',borderRadius:8,border:`1px solid ${accent}55`,background:`${accent}15`,color:accent,cursor:'pointer',fontSize: isMobile ? 11 : 12,fontFamily:"'DM Sans',sans-serif",transition:'all .2s'}}>{isMobile ? 'Next →' : `${nextLabel} →`}</button>}
       </div>
     </div>
   );
@@ -79,6 +80,7 @@ function NavBar({ accent, label, onBack, onNext, nextLabel='Next', onHome }) {
 // PAGE 2 - ML PIPELINE  (blue theme)
 // ─────────────────────────────────────────────────────────────────────────────
 export function PipelinePage({ onNext, onBack, onHome }) {
+  const isMobile = useMobile();
   const [active, setActive]    = useState(-1);
   const [done, setDone]        = useState([]);
   const [running, setRunning]  = useState(false);
@@ -134,16 +136,16 @@ export function PipelinePage({ onNext, onBack, onHome }) {
         <div key={p.id} style={{position:'fixed',top:'40%',left:p.x,width:6,height:6,borderRadius:'50%',background:p.color,zIndex:20,pointerEvents:'none',animation:'particleX .8s ease-out forwards','--px':p.px,'--py':p.py,boxShadow:`0 0 8px ${p.color}`}}/>
       ))}
 
-      <div style={{position:'relative',zIndex:2,maxWidth:1140,margin:'0 auto',padding:'38px 28px'}}>
+      <div style={{position:'relative',zIndex:2,maxWidth:1140,margin:'0 auto',padding: isMobile ? '24px 16px' : '38px 28px'}}>
         <NavBar accent='#38bdf8' label='Skill Showcase 01 - Big Data + MLOps ' onBack={onBack} onNext={onNext} onHome={onHome}/>
 
         <div style={{animation:'vUp .8s cubic-bezier(.22,1,.36,1) .1s both'}}>
           <h1 style={{fontFamily:"'Syne',sans-serif",fontWeight:800,fontSize:'clamp(30px,4.5vw,54px)',lineHeight:1.08,marginBottom:10,background:'linear-gradient(130deg,#fff 0%,#38bdf8 45%,#005DAA 100%)',WebkitBackgroundClip:'text',WebkitTextFillColor:'transparent',backgroundClip:'text'}}>ML Pipeline<br/>Architecture</h1>
-          <p style={{fontSize:13,color:'rgba(232,234,240,.38)',marginBottom:40}}>Python · Java · SQL · Apache Spark · Airflow · Kafka · Batch + Real-time · MLOps</p>
+          <p style={{fontSize: isMobile ? 11 : 13,color:'rgba(232,234,240,.38)',marginBottom: isMobile ? 24 : 40,lineHeight:1.6}}>Python · Java · SQL · Apache Spark · Airflow · Kafka · Batch + Real-time · MLOps</p>
         </div>
 
         {/* ── Pipeline canvas ── */}
-        <div style={{background:'rgba(7,18,33,.85)',border:'1px solid rgba(56,189,248,.15)',borderRadius:22,padding:'36px 28px 28px',marginBottom:24,backdropFilter:'blur(24px)',position:'relative',overflow:'hidden',animation:'vUp .8s cubic-bezier(.22,1,.36,1) .2s both'}}>
+        <div style={{background:'rgba(7,18,33,.85)',border:'1px solid rgba(56,189,248,.15)',borderRadius:22,padding: isMobile ? '20px 12px 16px' : '36px 28px 28px',marginBottom:24,backdropFilter:'blur(24px)',position:'relative',overflow:'hidden',animation:'vUp .8s cubic-bezier(.22,1,.36,1) .2s both'}}>
 
           {/* connecting SVG */}
           <svg style={{position:'absolute',top:0,left:0,width:'100%',height:'100%',pointerEvents:'none',zIndex:0}} preserveAspectRatio="none">
@@ -170,13 +172,13 @@ export function PipelinePage({ onNext, onBack, onHome }) {
           </svg>
 
           {/* Stage nodes */}
-          <div style={{display:'grid',gridTemplateColumns:'repeat(6,1fr)',gap:10,position:'relative',zIndex:1}}>
+          <div style={{display:'grid',gridTemplateColumns: isMobile ? 'repeat(3,1fr)' : 'repeat(6,1fr)',gap: isMobile ? 8 : 10,position:'relative',zIndex:1}}>
             {stages.map((s,idx)=>{
               const isA=active===idx, isDone=done.includes(idx);
               return (
                 <div key={idx} onClick={()=>!running&&setActive(active===idx?-1:idx)}
-                  style={{display:'flex',flexDirection:'column',alignItems:'center',gap:10,cursor:'pointer'}}>
-                  <div style={{position:'relative',width:68,height:68,borderRadius:'50%',display:'flex',alignItems:'center',justifyContent:'center',fontSize:26,
+                  style={{display:'flex',flexDirection:'column',alignItems:'center',gap: isMobile ? 6 : 10,cursor:'pointer'}}>
+                  <div style={{position:'relative',width: isMobile ? 48 : 68,height: isMobile ? 48 : 68,borderRadius:'50%',display:'flex',alignItems:'center',justifyContent:'center',fontSize: isMobile ? 18 : 26,
                     background:isA?`radial-gradient(circle,${s.color}30,${s.color}08)`:isDone?`${s.color}14`:'rgba(255,255,255,.02)',
                     border:`2px solid ${isA?s.color:isDone?s.color+'55':'rgba(255,255,255,.07)'}`,
                     boxShadow:isA?`0 0 32px ${s.color}66,0 0 64px ${s.color}22`:isDone?`0 0 14px ${s.color}33`:'none',
@@ -218,7 +220,7 @@ export function PipelinePage({ onNext, onBack, onHome }) {
         </div>
 
         {/* Tech grid */}
-        <div style={{display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:14}}>
+        <div style={{display:'grid',gridTemplateColumns: isMobile ? '1fr' : 'repeat(3,1fr)',gap: isMobile ? 10 : 14}}>
           {[
             {label:'Languages',items:['Python 3.11','Java 17','SQL','Scala'],color:'#38bdf8'},
             {label:'Big Data',items:['Apache Spark','Airflow DAGs','Kafka','AWS SQS','Flink'],color:'#34d399'},
@@ -244,6 +246,7 @@ export function PipelinePage({ onNext, onBack, onHome }) {
 // PAGE 3 - LIVE MONITORING DASHBOARD  (green theme)
 // ─────────────────────────────────────────────────────────────────────────────
 export function DashboardPage({ onNext, onBack, onHome }) {
+  const isMobile = useMobile();
   const [m, setM]         = useState({clients:17432891,insights:1143200042,acc:91.4,lat:87,campaigns:342,drift:2.3});
   const [chart, setChart] = useState(Array.from({length:24},(_,i)=>70+Math.random()*22));
   const [events, setEvents]= useState([]);
@@ -303,7 +306,7 @@ export function DashboardPage({ onNext, onBack, onHome }) {
       <SC/><Orbs c1='rgba(52,211,153,.07)' c2='rgba(56,189,248,.03)'/><ScanBeam color='rgba(52,211,153,.35)'/>
       <div style={{position:'fixed',inset:0,zIndex:0,opacity:.03,backgroundImage:'linear-gradient(rgba(52,211,153,.5) 1px,transparent 1px),linear-gradient(90deg,rgba(52,211,153,.5) 1px,transparent 1px)',backgroundSize:'42px 42px'}}/>
 
-      <div style={{position:'relative',zIndex:2,maxWidth:1200,margin:'0 auto',padding:'38px 28px'}}>
+      <div style={{position:'relative',zIndex:2,maxWidth:1200,margin:'0 auto',padding: isMobile ? '24px 16px' : '38px 28px'}}>
         <NavBar accent='#34d399' label='Skill Showcase 02 - Real-time Systems + Observability' onBack={onBack} onNext={onNext} onHome={onHome}/>
 
         <div style={{animation:'vUp .7s cubic-bezier(.22,1,.36,1) .1s both',marginBottom:36}}>
@@ -315,17 +318,17 @@ export function DashboardPage({ onNext, onBack, onHome }) {
         </div>
 
         {/* KPI row */}
-        <div style={{display:'grid',gridTemplateColumns:'repeat(6,1fr)',gap:12,marginBottom:22}}>
+        <div style={{display:'grid',gridTemplateColumns: isMobile ? 'repeat(3,1fr)' : 'repeat(6,1fr)',gap: isMobile ? 8 : 12,marginBottom:22}}>
           {kpis.map((k,i)=>(
-            <div key={i} style={{background:'rgba(7,18,33,.88)',border:`1px solid ${k.color}1a`,borderRadius:14,padding:'15px 10px',textAlign:'center',animation:`vUp .5s cubic-bezier(.22,1,.36,1) ${i*.06}s both`}}>
-              <div style={{fontSize:20,marginBottom:6}}>{k.icon}</div>
-              <div style={{fontFamily:"'Syne',sans-serif",fontWeight:800,fontSize:15,color:k.color,animation:'ticker .3s ease',animationPlayState:tick?'running':'paused'}}>{k.v}</div>
-              <div style={{fontSize:9,color:'rgba(232,234,240,.28)',letterSpacing:'.1em',textTransform:'uppercase',marginTop:4}}>{k.label}</div>
+            <div key={i} style={{background:'rgba(7,18,33,.88)',border:`1px solid ${k.color}1a`,borderRadius:14,padding: isMobile ? '10px 6px' : '15px 10px',textAlign:'center',animation:`vUp .5s cubic-bezier(.22,1,.36,1) ${i*.06}s both`}}>
+              <div style={{fontSize: isMobile ? 16 : 20,marginBottom: isMobile ? 3 : 6}}>{k.icon}</div>
+              <div style={{fontFamily:"'Syne',sans-serif",fontWeight:800,fontSize: isMobile ? 12 : 15,color:k.color,animation:'ticker .3s ease',animationPlayState:tick?'running':'paused'}}>{k.v}</div>
+              <div style={{fontSize: isMobile ? 8 : 9,color:'rgba(232,234,240,.28)',letterSpacing:'.1em',textTransform:'uppercase',marginTop:4}}>{k.label}</div>
             </div>
           ))}
         </div>
 
-        <div style={{display:'grid',gridTemplateColumns:'1.65fr 1fr',gap:20,marginBottom:20}}>
+        <div style={{display:'grid',gridTemplateColumns: isMobile ? '1fr' : '1.65fr 1fr',gap: isMobile ? 14 : 20,marginBottom:20}}>
 
           {/* Chart */}
           <div style={{background:'rgba(7,18,33,.88)',border:'1px solid rgba(52,211,153,.14)',borderRadius:18,padding:'22px 20px',animation:'vLeft .7s cubic-bezier(.22,1,.36,1) .25s both'}}>
@@ -376,7 +379,7 @@ export function DashboardPage({ onNext, onBack, onHome }) {
         </div>
 
         {/* Bottom stack */}
-        <div style={{display:'grid',gridTemplateColumns:'repeat(4,1fr)',gap:14}}>
+        <div style={{display:'grid',gridTemplateColumns: isMobile ? 'repeat(2,1fr)' : 'repeat(4,1fr)',gap: isMobile ? 10 : 14}}>
           {[
             {label:'Database Stack', icon:'🗄️', items:['PostgreSQL','MySQL','DynamoDB','FAISS Vector DB','MongoDB','Redis'],      color:'#38bdf8'},
             {label:'Cloud',          icon:'☁️', items:['AWS Lambda','GCP Vertex AI','Azure ML','OpenShift','S3','BigQuery'],       color:'#a78bfa'},
