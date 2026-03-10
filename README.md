@@ -4,24 +4,22 @@ A full-stack demo app mirroring what RBC's real NBA team build.
 
 ---
 
-### Step 2 — Start the Backend
+### Step 1 — Start the Backend
 ```bash
 cd backend
 npm install
 npm start
 ```
-Backend runs on http://localhost:3001
 
 ---
 
-### Step 3 — Start the Frontend
+### Step 2 — Start the Frontend
 Open a new terminal:
 ```bash
 cd frontend
 npm install
 npm start
 ```
-Frontend opens at http://localhost:3000
 
 ---
 
