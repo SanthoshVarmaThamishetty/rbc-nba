@@ -377,16 +377,6 @@ function LandingPage({ onEnter }) {
               <Robot isDragging={isDragging} dragProgress={dragProgress}/>
             </div>
 
-            {/* Mobile tap-to-launch button */}
-            {isMobile && (
-              <button onClick={onEnter} style={{ marginTop:8, padding:'14px 40px', borderRadius:12, border:'none', cursor:'pointer',
-                fontFamily:'Syne, sans-serif', fontWeight:700, fontSize:15, letterSpacing:'0.07em',
-                background:'linear-gradient(135deg, #FFD200, #e6a800)', color:'#03080f',
-                boxShadow:'0 4px 24px rgba(255,210,0,0.3)' }}>
-                Launch Engine 🚀
-              </button>
-            )}
-
           </div>
         </div>
         <div style={{ textAlign:'center', padding:'28px 0 8px', fontSize:10, color:'rgba(232,234,240,0.18)', letterSpacing:'0.12em', textTransform:'uppercase' }}>© Sathosh Ai RBC-NBA</div>
